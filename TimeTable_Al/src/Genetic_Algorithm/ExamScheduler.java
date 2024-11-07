@@ -1,12 +1,10 @@
-package Main;
-
+package Genetic_Algorithm;
 import java.util.*;
 
 public class ExamScheduler {
 
         private final Random random = new Random();
-        private final int numExams; // số lượng môn
-        private final int numSlots;// số lượng khung thời gian thi
+        private final Student obj;// số lượng khung thời gian thi
         private final Map<Integer, List<Integer>> studentExams; // danh sách các môn mà mỗi sinh viên đăng ký
 
         public ExamScheduler(int numExams, int numSlots, Map<Integer, List<Integer>> studentExams) {
