@@ -1,4 +1,4 @@
-package Objects;
+package ObjectBasic;
 
 public class Student {
     int id ;
