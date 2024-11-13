@@ -1,60 +1,34 @@
 package Genetic_Algorithm;
+import ObjectBasic.DetailSubject;
 import ObjectBasic.Student;
 import ObjectBasic.Subject;
-import ObjectBasic.Lecture;
+
 import java.util.*;
 
 public class ExamScheduler {
 
-    private final Random random = new Random();
-    private final List<Subject> subjects; // Danh sách các môn thi
-    private final int numSlots; // Số lượng khung giờ thi
-    private final Map<Integer, List<Integer>> studentExams; // Danh sách các môn mà mỗi sinh viên đăng ký
+    private static Random rand = new Random(); // Khởi tạo random một lần
 
-    public ExamScheduler(List<Subject> subjects, int numSlots, Map<Integer, List<Integer>> studentExams) {
-        this.subjects = subjects;
-        this.numSlots = numSlots;
-        this.studentExams = studentExams;
-    }
+    public static Map<Student, List<Subject>> generateRandomSchedule(List<Student> students, List<Subject> subjects) {
+        Map<Student, List<Subject>> schedule = new HashMap<>();
 
-    public List<int[]> initializePopulation(int populationSize) {
-        List<int[]> population = new ArrayList<>();
-        int numExams = subjects.size(); // Tính số lượng môn thi từ danh sách subjects
-        for (int i = 0; i < populationSize; i++) {
-            int[] schedule = new int[numExams];
-            for (int j = 0; j < numExams; j++) {
-                schedule[j] = random.nextInt(numSlots); // Gán mỗi môn học vào một khung giờ ngẫu nhiên
+        for (Student student : students) {
+            List<Subject> studentSchedule = new ArrayList<>();
+            for (Subject subject : student.getSubjects()) {
+                // Lấy danh sách thời gian thi của môn học
+                List<DetailSubject> availableTimes = subject.getDetailSubjects();
+
+                // Chọn một thời gian thi ngẫu nhiên cho môn học
+                int randIndex = rand.nextInt(availableTimes.size());
+                DetailSubject selectedTime = availableTimes.get(randIndex);
+
+                // Thêm môn học và thời gian thi vào lịch của học sinh
+                studentSchedule.add(new Subject(subject.getIdSubject(), subject.getSubjectName(), Collections.singletonList(selectedTime)));
             }
-            population.add(schedule);
+            schedule.put(student, studentSchedule); // Gán lịch thi cho học sinh
         }
-        return population;
+
+        return schedule;
     }
 
-//    public int calculateConflicts(int[] schedule) {
-//        int conflicts = 0;
-//        for (List<Integer> exams : studentExams.values()) {
-//            for (int i = 0; i < exams.size(); i++) {
-//                for (int j = i + 1; j < exams.size(); j++) {
-//                    if (schedule[exams.get(i)] == schedule[exams.get(j)]) {
-//                        conflicts++; // Đếm xung đột nếu hai môn có cùng khung thời gian
-//                    }
-//                }
-//            }
-//        }
-//        return conflicts;
-//    }
-//
-//    public int[] selectParent(List<int[]> population) {
-//        population.sort(Comparator.comparingInt(this::calculateConflicts));
-//        return population.get(0); // Chọn cá thể có ít xung đột nhất
-//    }
-//
-//    public int[] crossover(int[] parent1, int[] parent2) {
-//        int numExams = subjects.size(); // Tính số lượng môn thi từ danh sách subjects
-//        int[] child = new int[numExams];
-//        for (int i = 0; i < numExams; i++) {
-//            child[i] = random.nextBoolean() ? parent1[i] : parent2[i]; // Chọn khung giờ từ một trong hai cha mẹ
-//        }
-//        return child;
-//    }
 }

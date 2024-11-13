@@ -1,63 +1,90 @@
 package Test;
 
 import Genetic_Algorithm.ExamScheduler;
+import ObjectBasic.DetailSubject;
 import ObjectBasic.Student;
 import ObjectBasic.Subject;
-import ObjectBasic.Lecture;
 
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        // 1. Tạo danh sách môn thi
+
+        // Tạo các thời gian thi cho các môn học
+
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(2024, Calendar.NOVEMBER, 20, 7, 30);  // 20 tháng 11, 2024, 9:00 AM
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(2024, Calendar.NOVEMBER, 20, 9, 30); // 20 tháng 11, 2024, 2:30 PM
+        Calendar calendar3 = Calendar.getInstance();
+        calendar3.set(2024, Calendar.NOVEMBER, 20, 12, 15); // 21 tháng 11, 2024, 10:00 AM
+        Calendar calendar4 = Calendar.getInstance();
+        calendar4.set(2024, Calendar.NOVEMBER, 20, 2, 45); // 21 tháng 11, 2024, 10:00 AM
+
+        DetailSubject subjectMath1 = new DetailSubject(calendar1.getTime(), TimeZone.getDefault());
+        DetailSubject subjectMath2 = new DetailSubject(calendar2.getTime(), TimeZone.getDefault());
+        DetailSubject subjectMath3 = new DetailSubject(calendar3.getTime(), TimeZone.getDefault());
+        DetailSubject subjectMath4 = new DetailSubject(calendar4.getTime(), TimeZone.getDefault());
+
+
+        // Tạo môn học với nhiều thời gian thi
+        List<DetailSubject> mathTimes = new ArrayList<>();
+        mathTimes.add(subjectMath1);
+        mathTimes.add(subjectMath2);
+        mathTimes.add(subjectMath3);
+        mathTimes.add(subjectMath4);
+        Subject subjectMath = new Subject(101, "Toán học", mathTimes);
+
+        // Tạo môn học khác với thời gian thi khác
+        Calendar calendar5 = Calendar.getInstance();
+        calendar5.set(2024, Calendar.NOVEMBER, 20, 7, 30);  // 22 tháng 11, 2024, 8:30 AM
+        Calendar calendar6 = Calendar.getInstance();
+        calendar6.set(2024, Calendar.NOVEMBER, 20, 9, 30); // 22 tháng 11, 2024, 3:00 PM
+
+        DetailSubject subjectLiterature1 = new DetailSubject(calendar5.getTime(), TimeZone.getDefault());
+        DetailSubject subjectLiterature2 = new DetailSubject(calendar6.getTime(), TimeZone.getDefault());
+
+        List<DetailSubject> literatureTimes = new ArrayList<>();
+        literatureTimes.add(subjectLiterature1);
+        literatureTimes.add(subjectLiterature2);
+        Subject subjectLiterature = new Subject(102, "Văn học", literatureTimes);
+
+        // Tạo danh sách môn học
         List<Subject> subjects = new ArrayList<>();
-        subjects.add(new Subject(1, "Math", new Date(), TimeZone.getDefault()));
-        subjects.add(new Subject(2, "English", new Date(), TimeZone.getDefault()));
-        subjects.add(new Subject(3, "Physics", new Date(), TimeZone.getDefault()));
-        subjects.add(new Subject(4, "Chemistry", new Date(), TimeZone.getDefault()));
+        subjects.add(subjectMath);
+        subjects.add(subjectLiterature);
 
-        // 2. Tạo danh sách sinh viên
+        // Tạo học sinh với các môn học
         List<Student> students = new ArrayList<>();
-        students.add(new Student(1, "Alice", 1));
-        students.add(new Student(2, "Bob", 2));
-        students.add(new Student(3, "Charlie", 3));
-        students.add(new Student(4, "David", 4));
 
-        // 3. Mỗi sinh viên đăng ký một số môn thi
-        Map<Integer, List<Integer>> studentExams = new HashMap<>();
-        studentExams.put(1, Arrays.asList(1, 2));
-//        studentExams.put(2, Arrays.asList(2, 3));
-//        studentExams.put(3, Arrays.asList(3, 4));
-//        studentExams.put(4, Arrays.asList(1, 4));
+        List<Subject> student1Subjects = new ArrayList<>();
+        student1Subjects.add(subjectMath);
+        student1Subjects.add(subjectLiterature);
+        Student student1 = new Student(1, "Nguyễn Văn A", student1Subjects);
 
-        // 4. Tạo đối tượng ExamScheduler
-        int numSlots = 3;
-        ExamScheduler scheduler = new ExamScheduler(subjects, numSlots, studentExams);
+        List<Subject> student2Subjects = new ArrayList<>();
+        student2Subjects.add(subjectMath);
+        Student student2 = new Student(2, "Trần Thị B", student2Subjects);
 
-        // 5. Khởi tạo quần thể
-        int populationSize = 6;
-        List<int[]> population = scheduler.initializePopulation(populationSize);
+        students.add(student1);
+        students.add(student2);
 
-        // 6. In ra quần thể ban đầu
-        System.out.println("Initial Population:");
-        for (int[] schedule : population) {
-            System.out.println(Arrays.toString(schedule));
+        // Gọi hàm generateRandomSchedule để tạo lịch thi ngẫu nhiên cho học sinh
+        Map<Student, List<Subject>> schedule = ExamScheduler.generateRandomSchedule(students, subjects);
+
+        // In kết quả ra màn hình
+        for (Map.Entry<Student, List<Subject>> entry : schedule.entrySet()) {
+            Student student = entry.getKey();
+            List<Subject> studentSchedule = entry.getValue();
+
+            System.out.println("Lịch thi của học sinh: " + student.getName());
+            for (Subject subject : studentSchedule) {
+                System.out.println("  Môn học: " + subject.getSubjectName());
+                for (DetailSubject detailSubject : subject.getDetailSubjects()) {
+                    System.out.println("    Thời gian thi: " + detailSubject.getDateExam());
+                }
+            }
+            System.out.println("-------------------------------");
         }
-
-//        // 7. Tính toán số xung đột cho mỗi cá thể trong quần thể
-//        for (int i = 0; i < population.size(); i++) {
-//            int[] schedule = population.get(i);
-//            int conflicts = scheduler.calculateConflicts(schedule);
-//            System.out.println("Schedule " + (i + 1) + " conflicts: " + conflicts);
-//        }
-//
-//        // 8. Chọn cá thể cha mẹ có ít xung đột nhất
-//        int[] parent1 = scheduler.selectParent(population);
-//        System.out.println("Parent 1 selected: " + Arrays.toString(parent1));
-//
-//        // 9. Lai ghép hai cá thể để tạo con
-//        int[] parent2 = scheduler.selectParent(population); // Sử dụng lại parent1 cho thử nghiệm
-//        int[] child = scheduler.crossover(parent1, parent2);
-//        System.out.println("Child created by crossover: " + Arrays.toString(child));
     }
 }

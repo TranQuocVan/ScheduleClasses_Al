@@ -1,14 +1,17 @@
 package ObjectBasic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Student {
     int id ;
     String name ;
-    int idSubject;
+    List<Subject> subjects = new ArrayList<>();
 
-    public Student(int id, String name, int idSubject) {
+    public Student(int id, String name, List<Subject> subjects) {
         this.id = id;
         this.name = name;
-        this.idSubject = idSubject;
+        this.subjects= subjects;
     }
 
     public int getId() {
@@ -18,9 +21,8 @@ public class Student {
     public String getName() {
         return name;
     }
-
-    public int getIdSubject() {
-        return idSubject;
+    public List<Subject> getSubjects() {
+        return subjects;
     }
 
 }
