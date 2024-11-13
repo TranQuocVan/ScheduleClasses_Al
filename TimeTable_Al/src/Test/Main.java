@@ -13,13 +13,13 @@ public class Main {
         // Tạo các thời gian thi cho các môn học
 
         Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(2024, Calendar.NOVEMBER, 20, 7, 30);  // 20 tháng 11, 2024, 9:00 AM
+        calendar1.set(2024, Calendar.NOVEMBER, 20, 7, 30);
         Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(2024, Calendar.NOVEMBER, 20, 9, 30); // 20 tháng 11, 2024, 2:30 PM
+        calendar2.set(2024, Calendar.NOVEMBER, 20, 9, 30);
         Calendar calendar3 = Calendar.getInstance();
-        calendar3.set(2024, Calendar.NOVEMBER, 20, 12, 15); // 21 tháng 11, 2024, 10:00 AM
+        calendar3.set(2024, Calendar.NOVEMBER, 20, 12, 15);
         Calendar calendar4 = Calendar.getInstance();
-        calendar4.set(2024, Calendar.NOVEMBER, 20, 2, 45); // 21 tháng 11, 2024, 10:00 AM
+        calendar4.set(2024, Calendar.NOVEMBER, 20, 2, 45);
 
         DetailSubject subjectMath1 = new DetailSubject(calendar1.getTime(), TimeZone.getDefault());
         DetailSubject subjectMath2 = new DetailSubject(calendar2.getTime(), TimeZone.getDefault());
@@ -69,22 +69,25 @@ public class Main {
         students.add(student1);
         students.add(student2);
 
-        // Gọi hàm generateRandomSchedule để tạo lịch thi ngẫu nhiên cho học sinh
+        // Gọi hàm generateRandomSchedule để tạo cá thể (lịch thi ngẫu nhiên cho học sinh) .
         Map<Student, List<Subject>> schedule = ExamScheduler.generateRandomSchedule(students, subjects);
 
-        // In kết quả ra màn hình
-        for (Map.Entry<Student, List<Subject>> entry : schedule.entrySet()) {
-            Student student = entry.getKey();
-            List<Subject> studentSchedule = entry.getValue();
+        // Gọi hàm generatePopulation để tạo quần thể (truyền vào kích thước, tạo ra số cá thể theo kích thước) .
 
-            System.out.println("Lịch thi của học sinh: " + student.getName());
-            for (Subject subject : studentSchedule) {
-                System.out.println("  Môn học: " + subject.getSubjectName());
-                for (DetailSubject detailSubject : subject.getDetailSubjects()) {
-                    System.out.println("    Thời gian thi: " + detailSubject.getDateExam());
-                }
-            }
-            System.out.println("-------------------------------");
-        }
+        List<Map<Student, List<Subject>>> listSchedule = ExamScheduler.generatePopulation(5, students, subjects);
+
+
+        // Tìm ra 1 cá thể
+       ExamScheduler.tostringSchedule(schedule);
+
+       //In ra để check thử fitness
+        System.out.println("Điểm đánh giá: " + ExamScheduler.pointEvaluateFitness(schedule));
+
+
+        // In ra  quần thể
+//        ExamScheduler.tostringPopulation(listSchedule);
+
+
+
     }
 }
