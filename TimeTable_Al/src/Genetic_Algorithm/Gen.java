@@ -1,9 +1,9 @@
 package Genetic_Algorithm;
 
 public class Gen {
-    private int studentId;   // Mã sinh viên
-    private String subject;  // Môn học
-    private int timeSlot;    // Khung giờ thi (1–20, tương ứng với 5 ngày × 4 giờ)
+    private int studentId;
+    private String subject;
+    private int timeSlot;
 
     // Constructor
     public Gen(int studentId, String subject, int timeSlot) {
