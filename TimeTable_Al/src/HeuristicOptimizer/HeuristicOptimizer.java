@@ -2,96 +2,94 @@ package HeuristicOptimizer;
 
 import Genetic_Algorithm.Gen;
 import Genetic_Algorithm.Individual;
+import Genetic_Algorithm.Student;
 
 import java.util.*;
 
 public class HeuristicOptimizer {
-    public static void optimize(Individual individual) {
-        List<Gen> genes = individual.getGenes();
-//        genes.sort(Comparator.comparing(Gen::getSubject)); // Sắp xếp theo môn học (String)
 
-        // Dùng một map để theo dõi số sinh viên đăng ký mỗi môn học trong từng ngày
-        Map<String, Map<Integer, List<Integer>>> subjectDayMap = new HashMap<>(); // Môn học -> Ngày -> Danh sách sinh viên
 
-        // Duyệt qua tất cả các gen và tối ưu hóa
-        for (Gen gen : genes) {
-            String subject = gen.getSubject();
-            int studentId = gen.getStudentId();
-            int timeSlot = gen.getTimeSlot();
-            int day = (timeSlot - 1) / 4 + 1; // Mỗi ngày có 4 slot (1-4, 5-8, 9-12,...)
 
-            // Nếu môn học chưa có ngày thi, khởi tạo map
-            subjectDayMap.putIfAbsent(subject, new HashMap<>());
-            subjectDayMap.get(subject).putIfAbsent(day, new ArrayList<>());
+    public static List<Gen> createInitialGenes(Map<Integer, List<String>> studentSubjects, List<String> rooms) {
+        Map<String, List<Student>> subjectToStudentsMap = new HashMap<>();
 
-            // Thêm sinh viên vào danh sách thi môn trong ngày
-            subjectDayMap.get(subject).get(day).add(studentId);
+        // Nhóm sinh viên theo môn học
+        for (Map.Entry<Integer, List<String>> entry : studentSubjects.entrySet()) {
+            int studentId = entry.getKey();
+            List<String> subjects = entry.getValue();
+
+            for (String subject : subjects) {
+                subjectToStudentsMap.putIfAbsent(subject, new ArrayList<>());
+                subjectToStudentsMap.get(subject).add(new Student(studentId, "Student " + studentId));
+            }
         }
 
-        // Duyệt qua tất cả các môn và điều chỉnh lịch thi nếu quá tải
-        for (Map.Entry<String, Map<Integer, List<Integer>>> entry : subjectDayMap.entrySet()) {
+        List<Gen> initialGenes = new ArrayList<>();
+        Random random = new Random();
+
+        // Tạo Gen cho mỗi môn học
+        for (Map.Entry<String, List<Student>> entry : subjectToStudentsMap.entrySet()) {
             String subject = entry.getKey();
-            Map<Integer, List<Integer>> dayMap = entry.getValue();
+            List<Student> studentsForGen = entry.getValue();
+            int timeSlot;
 
-            for (Map.Entry<Integer, List<Integer>> dayEntry : dayMap.entrySet()) {
-                int day = dayEntry.getKey();
-                List<Integer> students = dayEntry.getValue();
+            // Chọn thời gian thi cho môn học
+            timeSlot = random.nextInt(20) + 1; // Chọn ngẫu nhiên một thời gian thi
 
-                // Nếu số lượng sinh viên vượt quá sức chứa phòng
-//                if (students.size() > 40) {
-//                    // Phân chia sinh viên thành các nhóm nhỏ hơn để phân bổ vào các thời gian thi khác
-//                    int numRoomsRequired = (students.size() + 39) / 40; // Tính số phòng cần thiết
-//                    int studentsPerRoom = 40;
-//
-//                    // Tạo các slot thi mới cho sinh viên
-//                    for (int i = 0; i < numRoomsRequired; i++) {
-//                        int newTimeSlot = findAvailableTimeSlot(subject, day, i, individual);
-//                        List<Integer> roomStudents = new ArrayList<>();
-//
-//                        // Chọn sinh viên vào phòng mới
-//                        for (int j = 0; j < studentsPerRoom && !students.isEmpty(); j++) {
-//                            roomStudents.add(students.remove(0));
-//                        }
-//
-//                        // Cập nhật thời gian thi cho các sinh viên
-//                        for (Integer studentId : roomStudents) {
-//                            updateTimeSlotForStudent(individual, studentId, subject, newTimeSlot);
-//                        }
-//                    }
-//                }
-            }
+            // Chọn ngẫu nhiên một phòng từ danh sách
+            String room = rooms.get(random.nextInt(rooms.size()));
+
+            // Thêm Gen vào danh sách
+            initialGenes.add(new Gen(studentsForGen, subject, timeSlot, room)); // Sử dụng phòng ngẫu nhiên
         }
+
+        return initialGenes;
     }
 
-    // Tìm một thời gian thi mới cho môn học mà không gây xung đột
-    private static int findAvailableTimeSlot(String subject, int day, int roomIndex, Individual individual) {
-        Random rand = new Random();
-        int timeSlot;
+    public static void resolveTimeSlotConflicts(Individual individual) {
+        Map<Integer, Set<Integer>> studentTimeSlotMap = new HashMap<>();
 
-        do {
-            timeSlot = (day - 1) * 4 + (roomIndex + 1); // Lấy thời gian thi cho môn trong ngày
-        } while (isTimeSlotConflict(individual, subject, timeSlot)); // Kiểm tra xung đột với lịch thi hiện tại
-
-        return timeSlot;
-    }
-
-    // Kiểm tra xem thời gian thi có bị xung đột không
-    private static boolean isTimeSlotConflict(Individual individual, String subject, int timeSlot) {
+        // Duyệt qua tất cả các Gen để kiểm tra xung đột
         for (Gen gen : individual.getGenes()) {
-            if (gen.getSubject().equals(subject) && gen.getTimeSlot() == timeSlot) {
-                return true; // Nếu có xung đột
+            List<Student> students = gen.getListSt();
+            int timeSlot = gen.getTimeSlot();
+            boolean hasConflict = false;
+
+            // Kiểm tra xung đột thời gian cho từng sinh viên
+            for (Student st : students) {
+                studentTimeSlotMap.putIfAbsent(st.getId(), new HashSet<>());
+                if (studentTimeSlotMap.get(st.getId()).contains(timeSlot)) {
+                    hasConflict = true;
+                    break;
+                }
             }
-        }
-        return false; // Không có xung đột
-    }
 
-    // Cập nhật thời gian thi cho sinh viên
-    private static void updateTimeSlotForStudent(Individual individual, int studentId, String subject, int newTimeSlot) {
-        for (Gen gen : individual.getGenes()) {
-            if (gen.getStudentId() == studentId && gen.getSubject().equals(subject)) {
+            if (hasConflict) {
+                // Xử lý xung đột: Thay đổi thời gian thi
+                int newTimeSlot;
+                boolean validTimeSlot;
+                do {
+                    newTimeSlot = new Random().nextInt(20) + 1; // Chọn ngẫu nhiên một thời gian thi mới
+                    validTimeSlot = true; // Giả định rằng thời gian thi là hợp lệ
+
+                    // Kiểm tra xem thời gian thi mới có gây xung đột không
+                    for (Student st : students) {
+                        if (studentTimeSlotMap.get(st.getId()).contains(newTimeSlot)) {
+                            validTimeSlot = false; // Nếu có xung đột, đánh dấu là không hợp lệ
+                            break;
+                        }
+                    }
+                } while (!validTimeSlot); // Lặp lại cho đến khi tìm được thời gian thi hợp lệ
+
+                // Cập nhật thời gian thi cho Gen
                 gen.setTimeSlot(newTimeSlot);
-                break;
+                System.out.println("Đã thay đổi thời gian thi cho Gen: " + gen.getSubject() + " sang thời gian " + newTimeSlot);
+            }
+
+            // Cập nhật map thời gian thi cho sinh viên
+            for (Student st : students) {
+                studentTimeSlotMap.get(st.getId()).add(gen.getTimeSlot());
             }
         }
     }
-    }
+}
