@@ -1,6 +1,7 @@
 package Test;
 
 
+import Genetic_Algorithm.Crossover;
 import Genetic_Algorithm.Population;
 
 import java.util.ArrayList;
@@ -43,6 +44,67 @@ public class Test {
             studentSubjects.put(18, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
             studentSubjects.put(19, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CTDLGT"));
             studentSubjects.put(20, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(21, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB"));
+            studentSubjects.put(22, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3"));
+            studentSubjects.put(23, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3"));
+            studentSubjects.put(24, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(25, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(26, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(27, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(28, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(29, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(30, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(31, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "LSD", "CSDL"));
+            studentSubjects.put(32, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "LTW", "CSDL"));
+            studentSubjects.put(33, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(34, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "HDHNC", "CSDL"));
+            studentSubjects.put(35, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(36, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(37, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(38, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(39, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CTDLGT"));
+            studentSubjects.put(40, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(41, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB"));
+            studentSubjects.put(42, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3"));
+            studentSubjects.put(43, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3"));
+            studentSubjects.put(44, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(45, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(46, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(47, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(48, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(49, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(50, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(51, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "LSD", "CSDL"));
+            studentSubjects.put(52, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "LTW", "CSDL"));
+            studentSubjects.put(53, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(54, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "HDHNC", "CSDL"));
+            studentSubjects.put(55, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(56, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(57, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(58, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(59, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CTDLGT"));
+            studentSubjects.put(60, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(61, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB"));
+            studentSubjects.put(62, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3"));
+            studentSubjects.put(63, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3"));
+            studentSubjects.put(64, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(65, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(66, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "TTHCM"));
+            studentSubjects.put(67, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(68, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(69, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(70, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(71, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV3", "LSD", "CSDL"));
+            studentSubjects.put(72, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "LTW", "CSDL"));
+            studentSubjects.put(73, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(74, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "HDHNC", "CSDL"));
+            studentSubjects.put(75, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM"));
+            studentSubjects.put(76, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "CSDL"));
+            studentSubjects.put(77, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CSDL"));
+            studentSubjects.put(78, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "AV1", "CSDL"));
+            studentSubjects.put(79, Arrays.asList("Math", "English", "LTNC", "LTCB", "AV1", "TTHCM", "CTDLGT"));
+            studentSubjects.put(80, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "TTHCM", "CSDL"));
+
 
 
 
@@ -50,11 +112,13 @@ public class Test {
             Population population = new Population(populationSize, studentSubjects, rooms);
 
             // In toàn bộ quần thể kèm điểm fitness
-            printPopulation(population);
+//            printPopulation(population);
+            Crossover crs = new Crossover();
+            System.out.println(crs.tournamentSelection(population.getIndividuals(), 20));
+            System.out.println(crs.tournamentSelection(population.getIndividuals(), 20));
             
             
-            
-            
+                      
         }
         
 
