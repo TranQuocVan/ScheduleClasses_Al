@@ -114,7 +114,7 @@ public class Test {
             Individual parent1 = Crossover.tournamentSelection(population.getIndividuals(),20);
             Individual parent2 = Crossover.tournamentSelection(population.getIndividuals(),20);
 
-            Individual child = Crossover.breedIndividuals(parent1,parent2);
+            Individual child = Crossover.breedIndividuals(parent1,parent2,0.5);
             System.out.println(child);
                       
         }
