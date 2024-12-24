@@ -83,7 +83,6 @@ public class HeuristicOptimizer {
 
                 // Cập nhật thời gian thi cho Gen
                 gen.setTimeSlot(newTimeSlot);
-                System.out.println("Đã thay đổi thời gian thi cho Gen: " + gen.getSubject() + " sang thời gian " + newTimeSlot);
             }
 
             // Cập nhật map thời gian thi cho sinh viên

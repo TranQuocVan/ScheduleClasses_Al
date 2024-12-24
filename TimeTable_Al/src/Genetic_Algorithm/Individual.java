@@ -23,8 +23,6 @@ public class Individual {
             if (!studentTimeSlotMap.get(st.getId()).contains(gen.getTimeSlot())) {
                 studentTimeSlotMap.get(st.getId()).add(gen.getTimeSlot());
             } else {
-                // Xử lý xung đột (có thể ném ngoại lệ hoặc ghi log)
-                System.out.println("Phát hiện xung đột cho sinh viên " + st.getId() + " tại thời gian " + gen.getTimeSlot());
             }
         }
     }
@@ -71,7 +69,7 @@ public class Individual {
 
     @Override
     public String toString() {
-        return "Individual{" +
+        return "Individual{"  +
                 "genes=" + genes +
                 ", fitness=" + calculateFitness() +
                 '}';

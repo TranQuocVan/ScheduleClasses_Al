@@ -16,7 +16,7 @@ public class Gen {
 	}
 	@Override
 	public String toString() {
-		return "listSt:" + listSt + ", subject:" + subject + ", timeSlot:" + timeSlot + ", room:" + room;
+		return "listSt:" + listSt + ", subject:" + subject + ", timeSlot:" + timeSlot + ", room:" + room + "\n\r";
 	}
 	public List<Student> getListSt() {
 		return listSt;

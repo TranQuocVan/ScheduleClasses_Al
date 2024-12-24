@@ -109,12 +109,16 @@ public class Test {
             Population population = new Population(populationSize, studentSubjects, rooms);
             // In toàn bộ quần thể kèm điểm fitness
 //            printPopulation(population);
-//            System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
-//            System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
+            System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
+            System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
+            
             Individual parent1 = Crossover.tournamentSelection(population.getIndividuals(),20);
             Individual parent2 = Crossover.tournamentSelection(population.getIndividuals(),20);
+       
 
-            Individual child = Crossover.breedIndividuals(parent1,parent2,0.5);
+
+            Individual child = Crossover.checkStop(parent1,parent2,0.5);
+            
             System.out.println(child);
                       
         }
