@@ -16,7 +16,7 @@ public class Gen {
 	}
 	@Override
 	public String toString() {
-		return "Gen [listSt=" + listSt + ", subject=" + subject + ", timeSlot=" + timeSlot + ", room=" + room + "]";
+		return "listSt:" + listSt + ", subject:" + subject + ", timeSlot:" + timeSlot + ", room:" + room;
 	}
 	public List<Student> getListSt() {
 		return listSt;
@@ -42,8 +42,4 @@ public class Gen {
 	public void setRoom(String room) {
 		this.room = room;
 	}
-
-	
-    
-    
 }

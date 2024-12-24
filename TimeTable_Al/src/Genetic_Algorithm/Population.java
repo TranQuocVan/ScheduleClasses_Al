@@ -55,4 +55,3 @@ public class Population {
         System.out.println("Fitness: " + fittest.calculateFitness());
     }
 }
-

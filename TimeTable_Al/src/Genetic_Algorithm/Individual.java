@@ -1,8 +1,8 @@
 package Genetic_Algorithm;
 
-import HeuristicOptimizer.HeuristicOptimizer;
 
 import java.util.*;
+import HeuristicOptimizer.HeuristicOptimizer;
 
 public class Individual {
     private List<Gen> genes; // Danh sách các Gen

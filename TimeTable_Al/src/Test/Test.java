@@ -2,6 +2,7 @@ package Test;
 
 
 import Genetic_Algorithm.Crossover;
+import Genetic_Algorithm.Individual;
 import Genetic_Algorithm.Population;
 
 import java.util.ArrayList;
@@ -9,8 +10,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static Genetic_Algorithm.Population.printPopulation;
 
 // Lai, dotbien, tang mon, giam gio 
 public class Test {
@@ -106,20 +105,19 @@ public class Test {
             studentSubjects.put(80, Arrays.asList("Math", "Physics", "English", "LTNC", "LTCB", "TTHCM", "CSDL"));
 
 
-
-
             // Tạo quần thể
             Population population = new Population(populationSize, studentSubjects, rooms);
-
             // In toàn bộ quần thể kèm điểm fitness
 //            printPopulation(population);
-            Crossover crs = new Crossover();
-            System.out.println(crs.tournamentSelection(population.getIndividuals(), 20));
-            System.out.println(crs.tournamentSelection(population.getIndividuals(), 20));
-            
-            
+//            System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
+//            System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
+            Individual parent1 = Crossover.tournamentSelection(population.getIndividuals(),20);
+            Individual parent2 = Crossover.tournamentSelection(population.getIndividuals(),20);
+
+            Individual child = Crossover.breedIndividuals(parent1,parent2);
+            System.out.println(child);
                       
         }
-        
+
 
 }
