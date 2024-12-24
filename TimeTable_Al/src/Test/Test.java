@@ -1,15 +1,15 @@
 package Test;
 
 
-import Genetic_Algorithm.Crossover;
-import Genetic_Algorithm.Individual;
-import Genetic_Algorithm.Population;
+import Genetic_Algorithm.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.*;
 
 // Lai, dotbien, tang mon, giam gio 
 public class Test {
@@ -118,10 +118,33 @@ public class Test {
 
 
             Individual child = Crossover.checkStop(parent1,parent2,0.5);
-            
-            System.out.println(child);
-                      
+            displayChildInTable(child);
         }
-
+        private static void displayChildInTable(Individual child) {
+            // Create a JFrame
+            JFrame frame = new JFrame("Child Individual Details");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            
+            // Prepare data for the table
+            String[] columnNames = {"Subject", "Student ID", "Name", "Time Slot", "Room"};
+            List<Object[]> rowData = new ArrayList<>();
+            
+            for (Gen gen : child.getGenes()) {
+                for (Student student : gen.getListSt()) {
+                    rowData.add(new Object[]{gen.getSubject(), student.getId(), student.getName(), gen.getTimeSlot(), gen.getRoom()});
+                }
+            }
+            
+            Object[][] data = rowData.toArray(new Object[0][]);
+            
+            // Create the JTable
+            JTable table = new JTable(data, columnNames);
+            JScrollPane scrollPane = new JScrollPane(table);
+            frame.add(scrollPane);
+            
+            // Set frame size and visibility
+            frame.setSize(600, 400);
+            frame.setVisible(true);
+        }
 
 }

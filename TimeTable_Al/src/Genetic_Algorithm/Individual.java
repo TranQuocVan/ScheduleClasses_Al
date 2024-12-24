@@ -69,9 +69,6 @@ public class Individual {
 
     @Override
     public String toString() {
-        return "Individual{"  +
-                "genes=" + genes +
-                ", fitness=" + calculateFitness() +
-                '}';
+        return "genes: " + genes + ", fitness: " + calculateFitness();
     }
 }
