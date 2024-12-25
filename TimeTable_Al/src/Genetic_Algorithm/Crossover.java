@@ -6,6 +6,7 @@ import java.util.Random;
 import HeuristicOptimizer.HeuristicOptimizer;
 
 public class Crossover {
+    private static int recursiveCallCount = 0; // Biến tĩnh để đếm số lần gọi đệ quy
 	 // Phương thức chọn cha mẹ bằng cách sử dụng giải đấu
     public static Individual tournamentSelection(List<Individual> population, int tournamentSize) {
         Random random = new Random();
@@ -64,11 +65,16 @@ public class Crossover {
 	    if (child.calculateFitness() >= 1000) {
 	        System.out.println("Optimal individual found after " + count + " generations.");
 	    } else {
+	    	recursiveCallCount++ ;
 	    	checkStop(mutate(parent1), parent2, crossoverRate);
 	       
 	    }
 	    return child;
 	}
+	
+	 public static int getRecursiveCallCount() {
+	        return recursiveCallCount;
+	    }
 
 
 //	 Phương thức đột biến cá thể

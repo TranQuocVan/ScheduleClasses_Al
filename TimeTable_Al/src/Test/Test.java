@@ -112,14 +112,18 @@ public class Test {
 		Population population = new Population(populationSize, studentSubjects, rooms);
 		// In toàn bộ quần thể kèm điểm fitness
 //            printPopulation(population);
-		System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
-		System.out.println(Crossover.tournamentSelection(population.getIndividuals(), 20));
+		
 
 		Individual parent1 = Crossover.tournamentSelection(population.getIndividuals(), 20);
 		Individual parent2 = Crossover.tournamentSelection(population.getIndividuals(), 20);
 
+		System.out.println(parent1);
+		System.out.println(parent2);
+		
 		Individual child = Crossover.checkStop(parent1, parent2, 0.5);
 		System.out.println(child);
+		System.out.println(Crossover.getRecursiveCallCount() + " lần đột biến");
+
 		displayScheduleViewer(child);
 	}
 
@@ -152,7 +156,7 @@ public class Test {
 		};
 
 		table.setRowHeight(25);
-		table.getTableHeader().setReorderingAllowed(false); // Không cho phép kéo cột
+		table.getTableHeader().setReorderingAllowed(false); 
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		tablePanel.add(scrollPane, BorderLayout.CENTER);
