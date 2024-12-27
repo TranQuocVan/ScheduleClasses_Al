@@ -16,6 +16,8 @@ import java.util.Map;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import static Genetic_Algorithm.Population.printPopulation;
+
 // Lai, dotbien, tang mon, giam gio 
 public class Test {
 	public static void main(String[] args) {
@@ -109,17 +111,23 @@ public class Test {
 
 		Population population = new Population(populationSize, studentSubjects, rooms);
 //            printPopulation(population);
-		
 
+
+
+		long startTime = System.currentTimeMillis();
 		Individual parent1 = Crossover.tournamentSelection(population.getIndividuals(), 20);
 		Individual parent2 = Crossover.tournamentSelection(population.getIndividuals(), 20);
 
 		System.out.println(parent1);
 		System.out.println(parent2);
-		
 		Individual child = Crossover.checkStop(parent1, parent2, 0.5);
 		System.out.println(child);
+		long endTime  = System.currentTimeMillis();
+        long res = endTime - startTime;
 		System.out.println(Crossover.getRecursiveCallCount() + " lần đột biến");
+
+		System.out.println(res + " mili giây");
+		System.out.println(res/1000 + " giây");
 
 		displayScheduleViewer(child);
 	}

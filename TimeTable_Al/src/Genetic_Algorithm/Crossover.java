@@ -7,7 +7,8 @@ import HeuristicOptimizer.HeuristicOptimizer;
 
 public class Crossover {
     private static int recursiveCallCount = 0;
-    public static Individual tournamentSelection(List<Individual> population, int tournamentSize) {
+
+	public static Individual tournamentSelection(List<Individual> population, int tournamentSize) {
         Random random = new Random();
         List<Individual> tournamentParticipants = new ArrayList<>();
 
@@ -35,8 +36,14 @@ public class Crossover {
             child = new Individual();
             List<Gen> parent1Genes = parent1.getGenes();
             List<Gen> parent2Genes = parent2.getGenes();
+			// Lai bằng cách cắt cố định 1 điểm ( time > 20s)
+			// Lai bằng cách cắt ngẫu nhiên 1 điểm ( time < 15s )
+			// Lai bằng cách chọn ngẫu nhiên gen cha và mẹ (time < 10s)
+
 
 //			int splitPoint = Math.min(parent1Genes.size(), parent2Genes.size()) / 2  ;
+//		    int splitPoint = random.nextInt(Math.min(parent1Genes.size(), parent2Genes.size()));
+////
 //                for (int i = 0; i < splitPoint; i++) {
 //                    child.addGen(parent1Genes.get(i));
 //                }
@@ -45,9 +52,8 @@ public class Crossover {
 //                }
 //                HeuristicOptimizer.resolveTimeSlotConflicts(child);
 
-//  -> Uniform Crossover
+
 		for (int i = 0; i < parent1Genes.size(); i++) {
-			// Chọn ngẫu nhiên gen từ một trong hai cha mẹ
 			if (random.nextBoolean()) {
 				child.addGen(parent1Genes.get(i));
 			} else {
@@ -58,7 +64,7 @@ public class Crossover {
     }
 
 	public static Individual checkStop(Individual parent1, Individual parent2, double crossoverRate) {
-	    Individual child = breedIndividuals(parent1, parent2, crossoverRate);
+	    Individual child ;
 	    int count = 0;
 	    while (count < 1000) {
 	        child = breedIndividuals(parent1, parent2, crossoverRate);
@@ -70,8 +76,11 @@ public class Crossover {
 			}
 		}
 		System.out.println("Không tìm được cá thể đạt 1000 điểm sau 1000 thế hệ. Tiếp tục với đột biến.");
+		Individual lessFitParent = parent1.calculateFitness() < parent2.calculateFitness() ? parent1 : parent2;
+		Individual moreFitParent = parent1.calculateFitness() >= parent2.calculateFitness() ? parent1 : parent2;
+		Individual mutatedParent = mutate(lessFitParent);
 		recursiveCallCount++;
-	    return checkStop(mutate(parent1), parent2, crossoverRate);
+	    return checkStop(mutatedParent, moreFitParent, crossoverRate);
 	}
 	
 	 public static int getRecursiveCallCount() {
