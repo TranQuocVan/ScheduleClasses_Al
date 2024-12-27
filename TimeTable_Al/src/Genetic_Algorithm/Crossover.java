@@ -42,24 +42,24 @@ public class Crossover {
 
 
 //			int splitPoint = Math.min(parent1Genes.size(), parent2Genes.size()) / 2  ;
-//		    int splitPoint = random.nextInt(Math.min(parent1Genes.size(), parent2Genes.size()));
-////
-//                for (int i = 0; i < splitPoint; i++) {
-//                    child.addGen(parent1Genes.get(i));
-//                }
-//                for (int i = splitPoint; i < parent2Genes.size(); i++) {
-//                    child.addGen(parent2Genes.get(i));
-//                }
-//                HeuristicOptimizer.resolveTimeSlotConflicts(child);
+		    int splitPoint = random.nextInt(Math.min(parent1Genes.size(), parent2Genes.size()));
+//
+                for (int i = 0; i < splitPoint; i++) {
+                    child.addGen(parent1Genes.get(i));
+                }
+                for (int i = splitPoint; i < parent2Genes.size(); i++) {
+                    child.addGen(parent2Genes.get(i));
+                }
+                HeuristicOptimizer.resolveTimeSlotConflicts(child);
 
 
-		for (int i = 0; i < parent1Genes.size(); i++) {
-			if (random.nextBoolean()) {
-				child.addGen(parent1Genes.get(i));
-			} else {
-				child.addGen(parent2Genes.get(i));
-			}
-		}
+//		for (int i = 0; i < parent1Genes.size(); i++) {
+//			if (random.nextBoolean()) {
+//				child.addGen(parent1Genes.get(i));
+//			} else {
+//				child.addGen(parent2Genes.get(i));
+//			}
+//		}
         return child;
     }
 
@@ -78,7 +78,7 @@ public class Crossover {
 		System.out.println("Không tìm được cá thể đạt 1000 điểm sau 1000 thế hệ. Tiếp tục với đột biến.");
 		Individual lessFitParent = parent1.calculateFitness() < parent2.calculateFitness() ? parent1 : parent2;
 		Individual moreFitParent = parent1.calculateFitness() >= parent2.calculateFitness() ? parent1 : parent2;
-		Individual mutatedParent = mutate(lessFitParent);
+		Individual mutatedParent = mutate(lessFitParent, 0.5);
 		recursiveCallCount++;
 	    return checkStop(mutatedParent, moreFitParent, crossoverRate);
 	}
@@ -88,9 +88,11 @@ public class Crossover {
 	    }
 
 
-	public static Individual mutate(Individual individual) {
+	public static Individual mutate(Individual individual, double mutationRate) {
 	    Random random = new Random();
-
+		if (random.nextDouble() > mutationRate) {
+			return individual;
+		}
 	    List<Gen> genes = individual.getGenes();
 
 	    if (!genes.isEmpty()) {
